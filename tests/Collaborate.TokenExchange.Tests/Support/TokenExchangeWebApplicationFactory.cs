@@ -19,31 +19,39 @@ public sealed class TokenExchangeWebApplicationFactory : WebApplicationFactory<P
 {
     public FakeTimeProvider Time { get; } = new(new DateTimeOffset(2026, 8, 31, 12, 0, 0, TimeSpan.Zero));
 
+    public TestRunLog Log { get; } = TestRunLog.Create();
+
+    public InMemoryTestLoggerProvider ServerLog { get; } = new();
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Development");
         builder.ConfigureLogging(logging =>
         {
-            // Pipe the in-process test server log to the terminal so
-            // `dotnet test` shows authentication, allow/deny, and HTTP status.
-            // Bearer tokens and signing keys are still not written.
             logging.ClearProviders();
             logging.SetMinimumLevel(LogLevel.Information);
             logging.AddFilter("Microsoft", LogLevel.Information);
             logging.AddFilter("Microsoft.AspNetCore.Authentication", LogLevel.Information);
             logging.AddFilter("Collaborate.TokenExchange", LogLevel.Information);
-            logging.AddSimpleConsole(options =>
-            {
-                options.TimestampFormat = "HH:mm:ss.fff ";
-                options.UseUtcTimestamp = true;
-                options.IncludeScopes = false;
-                options.SingleLine = true;
-            });
+            logging.AddProvider(ServerLog);
         });
         builder.ConfigureServices(services =>
         {
             services.AddSingleton<TimeProvider>(Time);
         });
+    }
+
+    private bool _logCompleted;
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing && !_logCompleted)
+        {
+            _logCompleted = true;
+            Log.Complete();
+        }
+
+        base.Dispose(disposing);
     }
 
     public HttpClient CreateAuthenticatedClient(
