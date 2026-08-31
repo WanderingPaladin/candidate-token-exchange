@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{82F88BE1-C3BA-455B-AD93-0657FECC915C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaborate.TokenExchange", "src\Collaborate.TokenExchange\Collaborate.TokenExchange.csproj", "{3D4F6743-9B56-4025-953D-74144B4DD0E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{08C8B29C-6977-4D4C-AB10-21D26972CEBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collaborate.TokenExchange.Tests", "tests\Collaborate.TokenExchange.Tests\Collaborate.TokenExchange.Tests.csproj", "{8EE65777-64A4-483A-9D67-4CAE9DD74E0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D4F6743-9B56-4025-953D-74144B4DD0E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D4F6743-9B56-4025-953D-74144B4DD0E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D4F6743-9B56-4025-953D-74144B4DD0E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D4F6743-9B56-4025-953D-74144B4DD0E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EE65777-64A4-483A-9D67-4CAE9DD74E0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EE65777-64A4-483A-9D67-4CAE9DD74E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EE65777-64A4-483A-9D67-4CAE9DD74E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EE65777-64A4-483A-9D67-4CAE9DD74E0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D4F6743-9B56-4025-953D-74144B4DD0E9} = {82F88BE1-C3BA-455B-AD93-0657FECC915C}
+		{8EE65777-64A4-483A-9D67-4CAE9DD74E0B} = {08C8B29C-6977-4D4C-AB10-21D26972CEBB}
+	EndGlobalSection
+EndGlobal
