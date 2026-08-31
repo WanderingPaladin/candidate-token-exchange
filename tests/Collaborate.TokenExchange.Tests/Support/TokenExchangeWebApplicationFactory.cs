@@ -51,6 +51,7 @@ public sealed class TokenExchangeWebApplicationFactory : WebApplicationFactory<P
         var key = signingKey ?? Services.GetRequiredService<ISigningCredentialProvider>().GetValidationKey();
         var now = DateTimeOffset.UtcNow;
         var lifetimeEnd = expires ?? now.AddMinutes(10);
+        var issuedAt = expires.HasValue ? expires.Value.AddMinutes(-10) : now;
 
         var claims = new List<Claim>
         {
@@ -63,9 +64,9 @@ public sealed class TokenExchangeWebApplicationFactory : WebApplicationFactory<P
             issuer: options.IncomingIssuer,
             audience: options.IncomingAudience,
             claims: claims,
-            notBefore: now.UtcDateTime.AddMinutes(-1),
+            notBefore: issuedAt.UtcDateTime,
             expires: lifetimeEnd.UtcDateTime,
-            issuedAt: now.UtcDateTime);
+            issuedAt: issuedAt.UtcDateTime);
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(new JwtHeader(credentials), payload);
