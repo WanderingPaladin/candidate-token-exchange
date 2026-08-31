@@ -8,6 +8,7 @@ using Collaborate.TokenExchange.Tokens;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Time.Testing;
 using Microsoft.IdentityModel.Tokens;
@@ -21,6 +22,24 @@ public sealed class TokenExchangeWebApplicationFactory : WebApplicationFactory<P
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Development");
+        builder.ConfigureLogging(logging =>
+        {
+            // Pipe the in-process test server log to the terminal so
+            // `dotnet test` shows authentication, allow/deny, and HTTP status.
+            // Bearer tokens and signing keys are still not written.
+            logging.ClearProviders();
+            logging.SetMinimumLevel(LogLevel.Information);
+            logging.AddFilter("Microsoft", LogLevel.Information);
+            logging.AddFilter("Microsoft.AspNetCore.Authentication", LogLevel.Information);
+            logging.AddFilter("Collaborate.TokenExchange", LogLevel.Information);
+            logging.AddSimpleConsole(options =>
+            {
+                options.TimestampFormat = "HH:mm:ss.fff ";
+                options.UseUtcTimestamp = true;
+                options.IncludeScopes = false;
+                options.SingleLine = true;
+            });
+        });
         builder.ConfigureServices(services =>
         {
             services.AddSingleton<TimeProvider>(Time);

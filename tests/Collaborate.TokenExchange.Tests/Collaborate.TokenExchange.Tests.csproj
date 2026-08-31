@@ -3,6 +3,8 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <RootNamespace>Collaborate.TokenExchange.Tests</RootNamespace>
+    <!-- Show per-test ASP.NET Core logs in the terminal. Semicolon must be encoded so MSBuild does not split loggers. -->
+    <VSTestLogger>console%3bverbosity=detailed</VSTestLogger>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.19" />
@@ -16,5 +18,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Collaborate.TokenExchange\Collaborate.TokenExchange.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

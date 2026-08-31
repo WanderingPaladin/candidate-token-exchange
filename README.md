@@ -186,6 +186,20 @@ dotnet test Collaborate.TokenExchange.sln
 dotnet run --project src/Collaborate.TokenExchange
 ```
 
+`dotnet test` prints the in-process server log to the terminal: JWT bearer success/failure, `Token exchange allowed` / `Token exchange denied` (with subject, actor, audience, scopes, reason, trace id), and the HTTP status. It does not print bearer tokens or signing keys.
+
+Watch the log in your own console:
+
+```bash
+dotnet test Collaborate.TokenExchange.sln --nologo
+```
+
+If you ever need even more framework noise:
+
+```bash
+dotnet test Collaborate.TokenExchange.sln --logger "console;verbosity=detailed" --verbosity normal
+```
+
 There is no login UI and no public token minting endpoint. Incoming tokens for manual calls must be signed with the development key and use:
 
 - `iss`: `https://idp.caseware.example`
